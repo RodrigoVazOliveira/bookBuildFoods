@@ -29,3 +29,13 @@ Para atualizar novos arquivos estáticos:
 ```bash
 $ python3 manage.py collectstatic
 ```
+
+
+## Troubleshooting
+
+Caso ocorra problema ao instalar o psycopg2 instale as dependências:
+Lembrando que precisa do PostgreSQL instalando antes de instalar a dependência.
+
+```bash
+apt install libpq-dev python3-dev
+```
