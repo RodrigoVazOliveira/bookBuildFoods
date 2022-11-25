@@ -24,3 +24,8 @@ Para iniciar o projeto localmente na porta 8000:
 $ python3 manage.py runserver
 ```
 
+Para atualizar novos arquivos estáticos:
+
+```bash
+$ python3 manage.py collectstatic
+```
