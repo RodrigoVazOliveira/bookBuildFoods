@@ -19,6 +19,10 @@ Para instalar as dependências:
 $ pip install -r requirements.txt
 ```
 
+
+
+
+
 Para iniciar o projeto localmente na porta 8000:
 ```bash
 $ python3 manage.py runserver
@@ -29,6 +33,19 @@ Para atualizar novos arquivos estáticos:
 ```bash
 $ python3 manage.py collectstatic
 ```
+
+Para criar a migração:
+
+```bash
+$ python manage.py makemigrations
+```
+
+Para criar as tabelas no banco:
+
+```bash
+$ python manage.py migrate
+```
+
 
 
 ## Troubleshooting
