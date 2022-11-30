@@ -1,6 +1,6 @@
 from django.db import models
 from datetime import datetime
-
+from peoples.models import People
 
 class Recipe(models.Model):
     name = models.CharField(max_length=200)
@@ -10,7 +10,6 @@ class Recipe(models.Model):
     income = models.CharField(max_length=100)
     category = models.CharField(max_length=100)
     date_time_created = models.DateTimeField(default=datetime.now(), blank=True)
-
-
+    people = models.ForeignKey(People, on_delete=models.CASCADE)
 
 
