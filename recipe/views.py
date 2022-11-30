@@ -3,7 +3,7 @@ from recipe.models import Recipe
 
 
 def index(request):
-    recipes = Recipe.objects.all()
+    recipes = Recipe.objects.filter(published = True)
     datas = {'recipes' : recipes }
 
     return render(request, 'index.html', datas)

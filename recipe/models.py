@@ -11,5 +11,6 @@ class Recipe(models.Model):
     category = models.CharField(max_length=100)
     date_time_created = models.DateTimeField(default=datetime.now(), blank=True)
     people = models.ForeignKey(People, on_delete=models.CASCADE)
+    published = models.BooleanField(default=False)
 
 
