@@ -20,7 +20,11 @@ $ pip install -r requirements.txt
 ```
 
 
+para criar novo app
 
+```bash
+$ python manage.py startapp <nome_do_seu_app>
+```
 
 
 Para iniciar o projeto localmente na porta 8000:
