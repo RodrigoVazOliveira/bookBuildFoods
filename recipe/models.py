@@ -12,5 +12,6 @@ class Recipe(models.Model):
     date_time_created = models.DateTimeField(default=datetime.now(), blank=True)
     people = models.ForeignKey(People, on_delete=models.CASCADE)
     published = models.BooleanField(default=False)
+    photo = models.ImageField(upload_to='photos/%d/%m/%Y/', blank=True)
 
 
