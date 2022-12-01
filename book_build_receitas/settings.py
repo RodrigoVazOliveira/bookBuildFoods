@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'book_build_receitas.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'book_foods',
+            'NAME': 'book_foods',
         'USER': 'book_foods',
         'PASSWORD': 'bookfoods',
         'HOST': '127.0.0.1',
