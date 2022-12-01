@@ -1,11 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1>Olá, {{ user.username }}</h1>
-  <h1>Dashboard</h1>
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- Preloader -->
+    <div id="preloader">
+        <i class="circle-preloader"></i>
+        <img src="{% static 'img/core-img/pizza.png' %}" alt="">
+    </div>
+
+    {% include 'partials/_search.html' %}
+    {% include 'partials/_menu.html' %}
+
+    <div class="contact-area section-padding-0-80">
+       <div class="container">
+           <div class="row">
+               <div class="col-12">
+                   <div class="section-heading">
+                       <h3>Olá {{ user.username }}</h3>
+                   </div>
+               </div>
+           </div>
+       </div>
+    </div>
+
+    <!-- ##### Best Receipe Area Start ##### -->
+    <section class="best-receipe-area">
+        <div class="container">
+            <div class="row">
+                {% if  recipes %}
+                {% for recipe in recipes %}
+                <!-- Single Best Receipe Area -->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="single-best-receipe-area mb-30">
+                        {% if recipe.photo == '' %}
+                            <img src="{% static 'img/bg-img/foto_receita.png' %}" alt="">
+                        {% else %}
+                            <img src="{{ recipe.photo.url }}" alt="">
+                        {% endif %}
+                        <div class="receipe-content">
+                            <a href="{% url 'receita' recipe.id %}">
+                                <h5>{{ recipe.name }}</h5>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                {% endif %}
+            </div>
+        </div>
+    </section>
+    <!-- ##### Best Receipe Area End ##### -->
+
+    {% include 'partials/_footer.html' %}
+
+ {% endblock %}
