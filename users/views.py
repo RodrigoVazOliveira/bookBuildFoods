@@ -1,10 +1,14 @@
 from django.shortcuts import render
 
+
 def register(request):
-    pass
+    return render(request, 'users/register.html')
+
 
 def login(request):
-    pass
+    return render(request, 'users/login.html')
+
+
 
 def dashboard(request):
     pass
