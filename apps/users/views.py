@@ -1,21 +1,22 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth, messages
 from recipe.models import Recipe
 
 
 def register(request):
+    """ registrar um novo usuario """
     if request.method == 'POST':
         name = request.POST['name']
         email = request.POST['email']
         password = request.POST['password']
         password_confirm = request.POST['password2']
         if input_is_empty(name):
-            messages.error(request,'O campo nome não pode ficar em branco')
+            messages.error(request, 'O campo nome não pode ficar em branco')
             return redirect('register')
 
         if input_is_empty(email):
-            messages.error(request,'O campo email não pode ficar em branco')
+            messages.error(request, 'O campo email não pode ficar em branco')
             return redirect('register')
 
         if passwords_not_equals(password, password_confirm):
@@ -35,12 +36,17 @@ def register(request):
 
 
 def input_is_empty(input):
+    """ testar se o campo está vazio """
     return not input.strip()
 
+
 def passwords_not_equals(password, password_confirm):
+    """ validar se os cmapos estão iguais  """
     return password != password_confirm
 
+
 def login(request):
+    """ efetuar login  """
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
@@ -68,7 +74,7 @@ def dashboard(request):
         id_user = request.user.id
         recipes = Recipe.objects.order_by('-date_time_created').filter(people=id_user)
         data = {
-            'recipes' : recipes
+            'recipes': recipes
         }
         return render(request, 'users/dashboard.html', data)
     return redirect('index')
@@ -77,6 +83,3 @@ def dashboard(request):
 def logout(request):
     auth.logout(request)
     return redirect('index')
-
-
-

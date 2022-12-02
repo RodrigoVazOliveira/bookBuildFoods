@@ -1,7 +1,7 @@
 import django.shortcuts
 from recipe.models import Recipe
 from django.contrib.auth.models import User
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import Paginator
 
 
 def index(request):
