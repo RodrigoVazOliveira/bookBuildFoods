@@ -1,5 +1,5 @@
 from django.contrib import admin
-from recipe.models import Recipe
+from .models import Recipe
 
 
 class ListRecipes(admin.ModelAdmin):
