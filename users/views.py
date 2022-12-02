@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
-from django.contrib import auth
+from django.contrib import auth, messages
 from recipe.models import Recipe
 
 
@@ -10,42 +10,43 @@ def register(request):
         email = request.POST['email']
         password = request.POST['password']
         password_confirm = request.POST['password2']
-        validate_inputs_register(name, email, password, password_confirm)
+        if input_is_empty(name):
+            messages.error(request,'O campo nome não pode ficar em branco')
+            return redirect('register')
 
-        if User.objects.filter(email=email):
-            print('Usuário com email {} já existe'.format(email))
+        if input_is_empty(email):
+            messages.error(request,'O campo email não pode ficar em branco')
+            return redirect('register')
+
+        if passwords_not_equals(password, password_confirm):
+            messages.error(request, 'As senhas não são iguais')
+            return redirect('register')
+
+        if User.objects.filter(email=email) or User.objects.filter(username=name):
+            messages.error(request, 'Usuário com email {} ou username {} já existe'.format(email, name))
             return redirect('register')
 
         user = User.objects.create_user(username=name, email=email, password=password)
         user.save()
-        print('Usuário cadastro com sucesso!')
-
+        messages.success(request, 'Usuário cadastro com sucesso!')
         return redirect('login')
 
     return render(request, 'users/register.html')
 
 
-def validate_inputs_register(name, email, password, password_confirm):
-    if not name.strip():
-        print('O campo nome não pode ficar em branco')
-        return redirect('register')
+def input_is_empty(input):
+    return not input.strip()
 
-    if not email.strip():
-        print('O campo email não pode ficar em branco')
-        return redirect('register')
-
-    if password != password_confirm:
-        print('As senhas não são iguais')
-        return redirect('register')
-
+def passwords_not_equals(password, password_confirm):
+    return password != password_confirm
 
 def login(request):
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
 
-        if email == '' or password == '':
-            print('Email ou senha não podem ficar em branco!')
+        if input_is_empty(email) or input_is_empty(password):
+            messages.error(request, 'Email ou senha não podem ficar em branco!')
             return redirect('login')
         if User.objects.filter(email=email).exists:
             username = User.objects.filter(email=email).values()[0]['username']
