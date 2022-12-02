@@ -6,7 +6,7 @@ def index(request):
     recipes = Recipe.objects.order_by('-date_time_created').filter(published = True)
     datas = {'recipes' : recipes }
 
-    return render(request, 'index.html', datas)
+    return render(request, 'recipes/index.html', datas)
 
 
 
@@ -15,7 +15,7 @@ def receita(request, recipe_id):
     recipe = get_object_or_404(Recipe, pk=recipe_id)
     data = {'recipe' : recipe}
 
-    return render(request, 'receita.html', data)
+    return render(request, 'recipes/receita.html', data)
 
 
 def search(request):
@@ -25,6 +25,6 @@ def search(request):
         if name_recipe:
             recipes = recipes.filter(name__icontains=name_recipe)
         datas = {'recipes': recipes}
-        return render(request, 'search.html', datas)
+        return render(request, 'recipes/search.html', datas)
 
-    return render(request, 'search.html')
+    return render(request, 'recipes/search.html')

@@ -100,7 +100,7 @@ def create_recipe(request):
         recipe.save()
         return redirect('dashboard')
 
-    return render(request, 'users/create_recipe.html')
+    return render(request, 'recipes/create_recipe.html')
 
 
 def delete_recipe(request, recipe_id):
@@ -114,7 +114,7 @@ def update_recipe(request, recipe_id):
     data = {
         'recipe' : recipe
     }
-    return render(request, 'users/update_recipe.html', data)
+    return render(request, 'recipes/update_recipe.html', data)
 
 def confirm_update_recipe(request):
     if request.method == 'POST':
