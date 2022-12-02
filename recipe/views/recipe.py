@@ -1,11 +1,16 @@
 import django.shortcuts
 from recipe.models import Recipe
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def index(request):
     recipes = Recipe.objects.order_by('-date_time_created').filter(published=True)
-    datas = {'recipes': recipes}
+    paginator = Paginator(recipes, 3)
+    page = request.GET.get('page')
+    recipe_per_page = paginator.get_page(page)
+    datas = {'recipes': recipe_per_page}
+
 
     return django.shortcuts.render(request, 'recipes/index.html', datas)
 
