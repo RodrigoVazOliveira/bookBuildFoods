@@ -3,12 +3,12 @@
 import datetime
 from django.db import migrations, models
 import django.db.models.deletion
+from django.conf import settings
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('peoples', '0001_initial'),
         ('recipe', '0002_alter_recipe_date_time_created'),
     ]
 
@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='recipe',
             name='people',
-            field=models.ForeignKey(default='', on_delete=django.db.models.deletion.CASCADE, to='peoples.people'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
             preserve_default=False,
         ),
         migrations.AlterField(
