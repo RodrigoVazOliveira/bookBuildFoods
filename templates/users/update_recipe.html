@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- Preloader -->
+<div id="preloader">
+    <i class="circle-preloader"></i>
+    <img src="{% static 'img/core-img/pizza.png' %}" alt="">
+</div>
+
+{% include 'partials/_search.html' %}
+
+{% include 'partials/_menu.html' %}
+
+<!-- ##### Contact Form Area Start ##### -->
+<div class="contact-area section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-heading">
+                    <h3>Edite aqui sua receita, {{ user.username }} :)</h3>
+                </div>
+            </div>
+        </div>
+        {% include 'partials/_alerts.html'%}
+        <div class="row">
+            <div class="col-12">
+            <p>Todos os campos são obrigatórios</p>
+                <div class="contact-form-area">
+                    <form
+                            action="{% url 'send_update_recipe' %}"
+                            method="post"
+                            name="update_recipe"
+                            enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="text" id="recipe_id" class="form-control" name="recipe_id" value="{{recipe.id}}" hidden>
+                        <div class="row">
+                            <div class="col-12 col-lg-12">
+                                <label for="name"><b>Título da receita</b></label>
+                                <input type="text" id="nome_recipe" class="form-control" name="name" placeholder="Ex. Suco de limão" value="{{recipe.name}}" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="ingredients"><b>Ingredientes</b></label>
+                                <textarea class="form-control" name="ingredients" cols="30" rows="10" placeholder="Ex. 2 Limões &#10;200ml de água" required>{{recipe.ingredients}}</textarea>
+                            </div>
+                            <div class="col-12">
+                                <label for="mode_prepare"><b>Modo de preparo</b></label>
+                                <textarea class="form-control" name="mode_prepare" cols="30" rows="10" placeholder="Ex. Corte o limão com cuidado e exprema no copo  &#10;Misture com a água e sirva." required>{{recipe.mode_prepare}}</textarea>
+                            </div>
+                            <div class="col-12 col-lg-4">
+                                <label for="time_prepare"><b>Tempo de preparo (minutos)</b></label>
+                                <input type="number" class="form-control" name="time_prepare" placeholder="Ex. 2" value="{{recipe.time_prepare}}" required>
+                            </div>
+                            <div class="col-12 col-lg-4">
+                                <label for="income"><b>Rendimento</b></label>
+                                <input type="text" class="form-control" name="income" placeholder="Ex. serve 1 pessoa" value="{{recipe.income}}" required>
+                            </div>
+                            <div class="col-12 col-lg-4">
+                                <label for="category"><b>Categoria da receita</b></label>
+                                <input type="text" class="form-control" name="category" placeholder="Ex. Sucos e bebidas" value="{{recipe.category}}"required>
+                            </div>
+                            <div class="col-12 col-lg-4">
+                                <label for="photo_old"><b>Foto utilizada</b></label>
+                                <img name="photo_old" src="{{ recipe.photo.url }}" alt="">
+                            </div>
+                            <div class="col-12 col-lg-4">
+                                <label for="photo"><b>Adicionar nova foto</b></label>
+                                <input type="file" class="form-control" name="photo">
+                            </div>
+                            <div class="col-12 text-center">
+                                <button class="btn btn-success" type="submit">Atualizar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'partials/_footer.html' %}
+{% endblock %}

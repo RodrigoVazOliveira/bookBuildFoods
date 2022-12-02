@@ -107,3 +107,32 @@ def delete_recipe(request, recipe_id):
     recipe = get_object_or_404(Recipe, pk=recipe_id)
     recipe.delete()
     return redirect('dashboard')
+
+
+def update_recipe(request, recipe_id):
+    recipe = get_object_or_404(Recipe, pk=recipe_id)
+    data = {
+        'recipe' : recipe
+    }
+    return render(request, 'users/update_recipe.html', data)
+
+def confirm_update_recipe(request):
+    if request.method == 'POST':
+        recipe_id = request.POST['recipe_id']
+        recipe = Recipe.objects.get(pk=recipe_id)
+        recipe.name = request.POST['name']
+        recipe.ingredients = request.POST['ingredients']
+        recipe.mode_prepare = request.POST['mode_prepare']
+        recipe.time_prepare = request.POST['time_prepare']
+        recipe.income = request.POST['income']
+        recipe.category = request.POST['category']
+
+        if 'photo' in request.FILES:
+            recipe.photo = request.FILES['photo']
+
+        recipe.save()
+        return redirect('dashboard')
+
+
+
+
