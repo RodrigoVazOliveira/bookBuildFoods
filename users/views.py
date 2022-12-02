@@ -1,6 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib import auth
+from recipe.models import Recipe
+
 
 def register(request):
     if request.method == 'POST':
@@ -62,11 +64,39 @@ def login(request):
 
 def dashboard(request):
     if request.user.is_authenticated:
-        return render(request, 'users/dashboard.html')
+        id_user = request.user.id
+        recipes = Recipe.objects.order_by('-date_time_created').filter(people=id_user)
+        data = {
+            'recipes' : recipes
+        }
+        return render(request, 'users/dashboard.html', data)
     return redirect('index')
-
 
 
 def logout(request):
     auth.logout(request)
     return redirect('index')
+
+
+def create_recipe(request):
+    if request.method == 'POST':
+        name = request.POST['name']
+        ingredients = request.POST['ingredients']
+        mode_prepare = request.POST['mode_prepare']
+        time_prepare = request.POST['time_prepare']
+        income = request.POST['income']
+        category = request.POST['category']
+        photo = request.FILES['photo']
+        user = get_object_or_404(User, pk=request.user.id)
+        recipe = Recipe.objects.create(name=name,
+                                       ingredients=ingredients,
+                                       mode_prepare=mode_prepare,
+                                       time_prepare=time_prepare,
+                                       income=income,
+                                       category=category,
+                                       people=user,
+                                       photo=photo)
+        recipe.save()
+        return redirect('dashboard')
+
+    return render(request, 'users/create_recipe.html')
