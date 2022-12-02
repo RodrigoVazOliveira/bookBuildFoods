@@ -65,12 +65,12 @@
                                         <li><a href="{% url 'dashboard' %}">Mnhas receitas</a></li>
                                     </ul>
                                     <ul>
+                                        <li><a href="{% url 'create_recipe' %}">Criar receita</a></li>
+                                    </ul>
+                                    <ul>
                                         <li><a href="{% url 'logout' %}">Sair</a></li>
                                     </ul>
                                 {% else %}
-                                    <ul>
-                                        <li><a href="{% url 'index' %}">Página Principal</a></li>
-                                    </ul>
                                     <ul>
                                         <li><a href="{% url 'register' %}">Cadastro</a></li>
                                     </ul>
